@@ -3,30 +3,36 @@
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
-# OPTION 1: ApexCharts Card (Robust configuration for newly created sensors)
-# (Requires custom:apexcharts-card from HACS)
+# OPTION 1: Built-in Native Statistics Bar Chart (Recommended for Mobile & Web)
+# (100% native Home Assistant card - zero plugins/HACS required, works everywhere)
+# ------------------------------------------------------------------------------
+type: statistics-graph
+title: Napi Gázfogyasztás (Sm³)
+days_to_show: 30
+stat_types:
+  - change
+chart_type: bar
+entities:
+  - entity: sensor.ariston_heating_gas_total
+    name: Fűtés (Sm³)
+  - entity: sensor.ariston_dhw_gas_total
+    name: Melegvíz (Sm³)
+
+---
+
+# ------------------------------------------------------------------------------
+# OPTION 2: ApexCharts Card (Requires HACS frontend resource loaded in app)
+# If using mobile, ensure /hacsfiles/apexcharts-card/apexcharts-card.js is in Dashboards -> Resources
 # ------------------------------------------------------------------------------
 type: custom:apexcharts-card
 header:
   show: true
-  title: Gas Consumption (Sm³)
-  show_states: true
-  colorize_states: true
+  title: Gázfogyasztás (Sm³)
 graph_span: 7d
-span:
-  end: day
 stacked: true
-apex_config:
-  chart:
-    type: bar
-  noData:
-    text: "Waiting for first burner cycle today..."
-  legend:
-    show: true
-    position: bottom
 series:
   - entity: sensor.ariston_heating_gas_daily
-    name: Heating
+    name: Fűtés
     color: "#ff7043"
     type: column
     group_by:
@@ -34,27 +40,9 @@ series:
       duration: 1d
 
   - entity: sensor.ariston_dhw_gas_daily
-    name: Domestic hot water
+    name: Melegvíz
     color: "#1e88e5"
     type: column
     group_by:
       func: max
       duration: 1d
-
----
-
-# ------------------------------------------------------------------------------
-# OPTION 2: Standard Home Assistant Built-in Statistics Graph Card
-# (No custom cards needed - works instantly)
-# ------------------------------------------------------------------------------
-type: statistics-graph
-title: Daily Gas Consumption (Sm³)
-days_to_show: 30
-stat_types:
-  - change
-chart_type: bar
-entities:
-  - entity: sensor.ariston_heating_gas_total
-    name: Heating (Sm³)
-  - entity: sensor.ariston_dhw_gas_total
-    name: Domestic Hot Water (Sm³)
