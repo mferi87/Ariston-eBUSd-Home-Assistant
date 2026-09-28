@@ -19,7 +19,7 @@ template:
           {% set flame = states('binary_sensor.ebusd_boiler_flame_active') %}
           {% set status = states('sensor.ebusd_boiler_boiler_status') | lower %}
           {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
-          {% if flame == 'on' and ('heating' in status) and ('water' not in status) and (status != 'heating hot water') %}
+          {% if flame == 'on' and status == 'heating' %}
             {{ power }}
           {% else %}
             0.0
@@ -35,7 +35,7 @@ template:
           {% set flame = states('binary_sensor.ebusd_boiler_flame_active') %}
           {% set status = states('sensor.ebusd_boiler_boiler_status') | lower %}
           {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
-          {% if flame == 'on' and (status in ['heating hot water', 'water tank', 'comfort', '3', '4', '24'] or 'water' in status) %}
+          {% if flame == 'on' and status in ['heating hot water', 'water tank', 'comfort', '3', '4', '24'] %}
             {{ power }}
           {% else %}
             0.0
