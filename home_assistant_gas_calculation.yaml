@@ -1,0 +1,108 @@
+# ==============================================================================
+# Home Assistant Gas Consumption Calculation (Sm³ for Heating & DHW)
+# ==============================================================================
+# Add this file or copy the sections into your /config/configuration.yaml
+# (or place under packages/ if you use package-based configuration)
+
+# ------------------------------------------------------------------------------
+# 1. Instantaneous Power Split (Heating vs. Domestic Hot Water)
+# ------------------------------------------------------------------------------
+template:
+  - sensor:
+      - name: "Ariston Heating Power"
+        unique_id: ariston_heating_power_kw
+        unit_of_measurement: "kW"
+        device_class: power
+        state_class: measurement
+        icon: mdi:radiator
+        state: >
+          {% set flame = states('binary_sensor.ebusd_boiler_flame_active') %}
+          {% set valve = states('sensor.ebusd_boiler_diverter_valve') %}
+          {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
+          {% if flame == 'on' and valve in ['heating', '1'] %}
+            {{ power }}
+          {% else %}
+            0.0
+          {% endif %}
+
+      - name: "Ariston DHW Power"
+        unique_id: ariston_dhw_power_kw
+        unit_of_measurement: "kW"
+        device_class: power
+        state_class: measurement
+        icon: mdi:shower
+        state: >
+          {% set flame = states('binary_sensor.ebusd_boiler_flame_active') %}
+          {% set valve = states('sensor.ebusd_boiler_diverter_valve') %}
+          {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
+          {% if flame == 'on' and valve in ['dhw', '0'] %}
+            {{ power }}
+          {% else %}
+            0.0
+          {% endif %}
+
+      # Convert total accumulated kWh to Standard Cubic Meters (Sm³)
+      # Standard calorific factor for Natural Gas G20: ~10.55 kWh per Sm³
+      - name: "Ariston Heating Gas Total"
+        unique_id: ariston_heating_gas_total_sm3
+        unit_of_measurement: "m³"
+        device_class: gas
+        state_class: total_increasing
+        icon: mdi:fire
+        state: >
+          {{ (states('sensor.ariston_heating_energy_kwh') | float(0) / 10.55) | round(3) }}
+
+      - name: "Ariston DHW Gas Total"
+        unique_id: ariston_dhw_gas_total_sm3
+        unit_of_measurement: "m³"
+        device_class: gas
+        state_class: total_increasing
+        icon: mdi:water-boiler
+        state: >
+          {{ (states('sensor.ariston_dhw_energy_kwh') | float(0) / 10.55) | round(3) }}
+
+# ------------------------------------------------------------------------------
+# 2. Riemann Sum Integral: Convert Power (kW) to Energy (kWh)
+# ------------------------------------------------------------------------------
+sensor:
+  - platform: integration
+    source: sensor.ariston_heating_power
+    name: "Ariston Heating Energy kWh"
+    unique_id: ariston_heating_energy_kwh
+    unit_prefix: k
+    round: 3
+    method: trapezoidal
+
+  - platform: integration
+    source: sensor.ariston_dhw_power
+    name: "Ariston DHW Energy kWh"
+    unique_id: ariston_dhw_energy_kwh
+    unit_prefix: k
+    round: 3
+    method: trapezoidal
+
+# ------------------------------------------------------------------------------
+# 3. Utility Meters for Daily and Monthly Gas Usage in Sm³
+# ------------------------------------------------------------------------------
+utility_meter:
+  # Daily Gas Consumption
+  ariston_heating_gas_daily:
+    source: sensor.ariston_heating_gas_total
+    cycle: daily
+    name: "Ariston Heating Gas Daily"
+
+  ariston_dhw_gas_daily:
+    source: sensor.ariston_dhw_gas_total
+    cycle: daily
+    name: "Ariston DHW Gas Daily"
+
+  # Monthly Gas Consumption
+  ariston_heating_gas_monthly:
+    source: sensor.ariston_heating_gas_total
+    cycle: monthly
+    name: "Ariston Heating Gas Monthly"
+
+  ariston_dhw_gas_monthly:
+    source: sensor.ariston_dhw_gas_total
+    cycle: monthly
+    name: "Ariston DHW Gas Monthly"
