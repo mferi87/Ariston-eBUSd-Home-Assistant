@@ -72,16 +72,16 @@ sensor:
     name: "Ariston Heating Energy kWh"
     unique_id: ariston_heating_energy_kwh
     unit_prefix: k
-    round: 3
-    method: trapezoidal
+    round: 4
+    method: left
 
   - platform: integration
     source: sensor.ariston_dhw_power
     name: "Ariston DHW Energy kWh"
     unique_id: ariston_dhw_energy_kwh
     unit_prefix: k
-    round: 3
-    method: trapezoidal
+    round: 4
+    method: left
 
 # ------------------------------------------------------------------------------
 # 3. Utility Meters for Daily and Monthly Gas Usage in Sm³

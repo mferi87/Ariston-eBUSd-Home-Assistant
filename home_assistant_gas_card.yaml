@@ -45,14 +45,20 @@ series:
     name: Fűtés
     color: "#ff7043"
     type: column
+    statistics:
+      type: state
+      period: day
     group_by:
-      func: raw
+      func: max
       duration: 1d
 
   - entity: sensor.ariston_dhw_gas_daily
     name: Melegvíz
     color: "#1e88e5"
     type: column
+    statistics:
+      type: state
+      period: day
     group_by:
-      func: raw
+      func: max
       duration: 1d
