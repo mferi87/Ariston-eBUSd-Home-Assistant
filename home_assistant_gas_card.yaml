@@ -7,16 +7,16 @@
 # (100% native Home Assistant card - zero plugins/HACS required, works everywhere)
 # ------------------------------------------------------------------------------
 type: statistics-graph
-title: Napi Gázfogyasztás (Sm³)
+title: Daily Gas Consumption (Sm³)
 days_to_show: 30
 stat_types:
   - change
 chart_type: bar
 entities:
   - entity: sensor.ariston_heating_gas_total
-    name: Fűtés (Sm³)
+    name: Heating (Sm³)
   - entity: sensor.ariston_dhw_gas_total
-    name: Melegvíz (Sm³)
+    name: Domestic Hot Water (Sm³)
 
 ---
 
@@ -26,7 +26,7 @@ entities:
 type: custom:apexcharts-card
 header:
   show: true
-  title: Gázfogyasztás (Sm³)
+  title: Gas Consumption (Sm³)
   show_states: true
   colorize_states: true
 graph_span: 7d
@@ -44,7 +44,7 @@ apex_config:
     decimalsInFloat: 2
 series:
   - entity: sensor.ariston_heating_gas_daily
-    name: Fűtés
+    name: Heating
     color: "#ff7043"
     type: column
     float_precision: 2
@@ -53,7 +53,7 @@ series:
       duration: 1d
 
   - entity: sensor.ariston_dhw_gas_daily
-    name: Melegvíz
+    name: Domestic hot water
     color: "#1e88e5"
     type: column
     float_precision: 2
