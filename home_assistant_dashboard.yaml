@@ -1,0 +1,498 @@
+views:
+  - title: Home
+    cards:
+      - type: picture-elements
+        elements:
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: switch.utility_room_presence_breaker_status
+            style:
+              top: 55%
+              left: 85%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.living_room_ceiling
+            style:
+              top: 28%
+              left: 70%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.living_room_spot
+            style:
+              top: 40%
+              left: 55%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.hallway_ceiling
+            style:
+              top: 55%
+              left: 53%
+            hold_action:
+              action: more-info
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.bedroom_ceiling_zigbee
+            style:
+              top: 28%
+              left: 30%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 40%
+              left: 39%
+            entity: light.bedroom_spot
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.bedroom_salt
+            style:
+              top: 42%
+              left: 28%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.wardrobe_light_wardrobe_light
+            style:
+              top: 28%
+              left: 7%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.bathroom_mirror
+            style:
+              top: 58%
+              left: 36%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: switch.shellypro4pm_c8f09e84b710_switch_2
+            style:
+              top: 52%
+              left: 25%
+            icon: mdi:lightbulb
+          - type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 55%
+              left: 68%
+            entity: light.wc_spot
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: switch.shellypro4pm_c8f09e84b710_switch_0
+            style:
+              top: 70%
+              left: 53%
+            icon: mdi:lightbulb
+          - type: state-icon
+            tap_action:
+              action: toggle
+            style:
+              top: 80%
+              left: 70%
+            state_color: true
+            entity: light.kitchen_ceiling
+            icon: mdi:lightbulb
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.kids_room_ceiling
+            style:
+              top: 80%
+              left: 25%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: switch.shellypro4pm_c8f09e84b710_switch_1
+            style:
+              top: 88%
+              left: 35%
+            icon: mdi:lightbulb
+          - type: state-label
+            entity: sensor.bathroom_temp_temperature
+            style:
+              top: 50%
+              left: 37%
+              font-size: 10px
+              color: blue
+          - type: state-label
+            entity: sensor.bathroom_temp_humidity
+            style:
+              top: 53%
+              left: 37%
+              font-size: 10px
+              color: blue
+          - type: state-label
+            entity: sensor.bedroom_temperature
+            style:
+              top: 5%
+              left: 40%
+              font-size: 10px
+              color: blue
+          - type: state-label
+            entity: sensor.bedroom_humidity
+            style:
+              top: 8%
+              left: 40%
+              font-size: 10px
+              color: blue
+          - type: state-label
+            entity: sensor.livingroom_floor_temperature
+            style:
+              top: 43%
+              left: 68%
+              font-size: 10px
+              color: blue
+            prefix: 'floor '
+          - type: state-label
+            entity: sensor.kids_room_temperature
+            style:
+              top: 67%
+              left: 10%
+              font-size: 10px
+              color: blue
+          - type: state-label
+            entity: sensor.kids_room_humidity
+            style:
+              top: 70%
+              left: 10%
+              font-size: 10px
+              color: blue
+          - type: state-icon
+            tap_action:
+              action: toggle
+            icon: mdi:lightbulb
+            style:
+              top: 80%
+              left: 90%
+            entity: light.countertop_light
+          - type: state-label
+            entity: sensor.kitchen_temperature_humidity
+            style:
+              top: 70%
+              left: 75%
+              font-size: 10px
+              color: blue
+          - type: state-label
+            entity: sensor.kitchen_temperature_temperature
+            style:
+              top: 67%
+              left: 75%
+              font-size: 10px
+              color: blue
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: switch.living_room_socket
+            style:
+              top: 30%
+              left: 86%
+            icon: mdi:pine-tree
+        image: /local/Untitled3.jpg
+      - type: entities
+        entities:
+          - switch.front_door
+      - type: entities
+        entities:
+          - entity: cover.covers
+          - entity: cover.bedroom
+          - entity: cover.kitchen
+          - entity: cover.living_room_garden
+          - entity: cover.living_room_street
+          - entity: cover.kids_room
+      - type: tile
+        entity: sensor.kids_room_temperature
+        features_position: bottom
+        vertical: false
+        features:
+          - type: trend-graph
+      - graph: line
+        type: sensor
+        entity: sensor.ebusd_boiler_ext_temp
+        detail: 1
+      - type: tile
+        entity: sensor.outdoorstorage_temp_temperature
+        vertical: false
+        features:
+          - type: trend-graph
+        features_position: bottom
+      - type: thermostat
+        entity: climate.kazan
+        name: Heating
+    badges: []
+    type: masonry
+  - type: sections
+    title: Livingroom
+    path: livingroom
+    icon: mdi:sofa-outline
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lámpák
+          - type: tile
+            entity: light.living_room_ceiling
+            name: Lámpa
+          - type: tile
+            entity: light.living_room_spot
+            name: Spot
+      - type: grid
+        cards:
+          - type: heading
+            heading: Redőny
+          - type: tile
+            entity: cover.living_room_garden
+            name: Nappali udvar
+            features_position: inline
+            vertical: false
+          - type: tile
+            entity: cover.living_room_street
+            name: Nappali utca
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+  - title: Konyha
+    path: konyha
+    icon: mdi:silverware
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lámpák
+          - type: tile
+            name: Lámpa
+            entity: switch.shellypro4pm_c8f09e84b710_switch_0
+            icon: mdi:lightbulb
+      - type: grid
+        cards:
+          - type: heading
+            heading: Redőny
+          - type: tile
+            entity: cover.kitchen
+        column_span: 1
+  - title: Hálószoba
+    path: haloszoba
+    icon: mdi:bed
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lámpák
+          - type: tile
+            entity: light.bedroom_ceiling_zigbee
+            name: Lámpa
+          - type: tile
+            entity: light.bedroom_spot
+            name: Spot
+          - type: tile
+            entity: light.wardrobe_light_wardrobe_light
+            name: Gardrób
+      - type: grid
+        cards:
+          - type: heading
+            heading: Hőmérő
+          - type: tile
+            entity: sensor.bedroom_temperature
+            name: Hőmérséklet
+          - type: tile
+            entity: sensor.bedroom_humidity
+            name: Páratartalom
+      - type: grid
+        cards:
+          - type: heading
+            heading: Redőny
+          - type: tile
+            entity: cover.bedroom
+        column_span: 1
+  - title: Gyerekszoba
+    path: gyerekszoba
+    type: sections
+    icon: mdi:teddy-bear
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lámpák
+          - type: tile
+            entity: light.kids_room_ceiling
+            name: Lámpa
+          - type: tile
+            entity: switch.shellypro4pm_c8f09e84b710_switch_1
+            name: Spot
+            icon: mdi:lightbulb
+          - type: tile
+            entity: light.shellydimmer2_d8bfc01a0657
+      - type: grid
+        cards:
+          - type: heading
+            heading: Hőmérő
+          - type: tile
+            entity: sensor.kids_room_temperature
+            name: Hőmérséklet
+          - type: tile
+            entity: sensor.kids_room_humidity
+            name: Páratartalom
+      - type: grid
+        cards:
+          - type: heading
+            heading: Redőny
+          - type: tile
+            entity: cover.kids_room
+        column_span: 1
+  - title: Well
+    path: temperatures
+    icon: mdi:water-well
+    cards:
+      - type: entities
+        entities:
+          - entity: switch.valve_1
+          - entity: switch.valve_2
+          - entity: switch.valve_3
+          - entity: sensor.valves_combined_flow_rate
+      - type: entities
+        entities:
+          - switch.shellypro4pm_c8f09e84b828_switch_1
+          - sensor.shellypro4pm_c8f09e84b828_switch_1_power
+      - type: entities
+        entities:
+          - entity: switch.vfd_pump_operation
+          - entity: sensor.vfd_vfd_running_frequency
+          - entity: number.vfd_target_frequency
+    visible:
+      - user: 15e34e67f64844cb843e7d19753aa0cb
+      - user: 3298689b7d344a8b9b52ed3cccf47894
+    type: masonry
+  - title: Heating
+    path: heating
+    icon: mdi:heating-coil
+    cards:
+      - type: entities
+        entities:
+          - sensor.heatingtemperature_kazan_be
+          - sensor.heatingtemperature_kazan_ki
+          - sensor.heatingtemperature_padlo_be
+          - sensor.heatingtemperature_padlo_ki
+      - type: entities
+        entities:
+          - entity: sensor.outdoorstorage_temp_temperature
+          - entity: sensor.outdoorstorage_temp_humidity
+      - type: entities
+        entities:
+          - entity: sensor.bathroom_temp_temperature
+            name: Temperature
+          - entity: sensor.bathroom_temp_humidity
+            name: Humidity
+        title: Bathroom
+      - type: entities
+        entities:
+          - entity: sensor.kids_room_temperature
+          - entity: sensor.kids_room_humidity
+        title: Kids room
+      - type: entities
+        entities:
+          - switch.bathroom_vent
+    visible:
+      - user: 15e34e67f64844cb843e7d19753aa0cb
+      - user: 3298689b7d344a8b9b52ed3cccf47894
+  - title: Boiler & Heating
+    icon: mdi:water-boiler
+    cards: []
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        cards:
+          - type: thermostat
+            entity: climate.ariston_heating
+            name: Zone 1 Heating
+            features:
+              - type: climate-hvac-modes
+                hvac_modes:
+                  - heat
+                  - 'off'
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: gauge
+                entity: sensor.ebusd_boiler_boiler_pressure
+                name: Boiler Pressure
+                unit: bar
+                min: 0
+                max: 3
+                needle: true
+                severity:
+                  red: 0
+                  green: 1
+                  yellow: 2
+              - type: entities
+                title: Boiler Overview
+                entities:
+                  - entity: sensor.ebusd_boiler_boiler_status
+                    name: Operating State
+                    icon: mdi:information-outline
+                  - entity: binary_sensor.ebusd_boiler_flame_active
+                    name: Burner Flame
+                    icon: mdi:fire
+                  - entity: sensor.ebusd_boiler_diverter_valve
+                    name: Diverter Valve
+                    icon: mdi:valve
+                  - entity: switch.ebusd_energymgr_dhw_status
+                    name: Hot Water Production
+                    icon: mdi:shower
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+          - type: history-graph
+            title: Ambient Temperatures
+            hours_to_show: 24
+            refresh_interval: 30
+            entities:
+              - entity: sensor.ebusd_energymgr_z1_room_temp_f
+                name: Room Temperature (Sensys HD)
+              - entity: sensor.ebusd_energymgr_ext_temp
+                name: Outdoor Temperature
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+          - type: history-graph
+            title: Heating Water Temperatures
+            hours_to_show: 24
+            refresh_interval: 30
+            entities:
+              - entity: sensor.ebusd_energymgr_z1_target_f
+                name: Target Flow Temp
+              - entity: sensor.ebusd_boiler_ewt_temp
+                name: Return Temp (EWT)
+      - type: grid
+        cards:
+          - type: history-graph
+            entities:
+              - entity: sensor.ebusd_boiler_flame_power_kw
+                name: Flame Power (kW)
+              - entity: sensor.ebusd_boiler_boiler_current_modulation
+                name: Gas Modulation (%)
+            title: Burner Power & Modulation
+            hours_to_show: 24
+            refresh_interval: 30
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section

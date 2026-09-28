@@ -1,0 +1,6 @@
+captures/
+*.log
+*.log.old
+*.pdf
+*.txt
+.DS_Store

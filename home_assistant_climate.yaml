@@ -1,0 +1,56 @@
+# ==============================================================================
+# Home Assistant Configuration for Ariston Genus ONE+ WiFi Boiler & eBUSd
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. MQTT Climate Entity (Thermostat)
+# ------------------------------------------------------------------------------
+# Add this under the 'mqtt:' section of your configuration.yaml
+# (If you already have 'mqtt:' in configuration.yaml, place the 'climate:' block inside it)
+
+mqtt:
+  climate:
+    - name: "Ariston Heating"
+      unique_id: "ariston_genus_climate"
+      icon: "mdi:radiator"
+      modes:
+        - "heat"
+        - "off"
+      mode_state_topic: "ebusd/energymgr/heating_status"
+      mode_state_template: >
+        {% if value_json.onoff.value == 'on' %}
+          heat
+        {% else %}
+          off
+        {% endif %}
+      mode_command_topic: "ebusd/energymgr/heating_status/set"
+      mode_command_template: >
+        {% if value == 'heat' %}
+          on
+        {% else %}
+          off
+        {% endif %}
+
+      # Room Temperature (Sensys HD)
+      current_temperature_topic: "ebusd/energymgr/z1_room_temp_f"
+      current_temperature_template: "{{ value_json['0'].value | float(0) }}"
+
+      # Target Day/Comfort Temperature Setpoint
+      temperature_state_topic: "ebusd/energymgr/z1_day_temp_e"
+      temperature_state_template: "{{ value_json['0'].value | float(21.0) }}"
+      temperature_command_topic: "ebusd/energymgr/z1_day_temp/set"
+      min_temp: 10
+      max_temp: 30
+      temp_step: 0.5
+      temperature_unit: "C"
+
+      # Burner Heating Action Status (Heating / Idle / Off)
+      action_topic: "ebusd/boiler/flame_active"
+      action_template: >
+        {% if value_json.onoff.value == 'on' %}
+          heating
+        {% elif states('switch.ebusd_energymgr_heating_status_winter_mode') == 'on' %}
+          idle
+        {% else %}
+          off
+        {% endif %}
