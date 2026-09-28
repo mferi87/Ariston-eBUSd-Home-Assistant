@@ -17,9 +17,9 @@ template:
         icon: mdi:radiator
         state: >
           {% set flame = states('binary_sensor.ebusd_boiler_flame_active') %}
-          {% set valve = states('sensor.ebusd_boiler_diverter_valve') %}
+          {% set status = states('sensor.ebusd_boiler_boiler_status') | lower %}
           {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
-          {% if flame == 'on' and valve in ['heating', '1'] %}
+          {% if flame == 'on' and ('heating' in status) and ('water' not in status) and (status != 'heating hot water') %}
             {{ power }}
           {% else %}
             0.0
@@ -33,9 +33,9 @@ template:
         icon: mdi:shower
         state: >
           {% set flame = states('binary_sensor.ebusd_boiler_flame_active') %}
-          {% set valve = states('sensor.ebusd_boiler_diverter_valve') %}
+          {% set status = states('sensor.ebusd_boiler_boiler_status') | lower %}
           {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
-          {% if flame == 'on' and valve in ['dhw', '0'] %}
+          {% if flame == 'on' and (status in ['heating hot water', 'water tank', 'comfort', '3', '4', '24'] or 'water' in status) %}
             {{ power }}
           {% else %}
             0.0
