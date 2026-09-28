@@ -16,12 +16,10 @@ template:
         state_class: measurement
         icon: mdi:radiator
         state: >
-          {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
-          {% set status = states('sensor.ebusd_boiler_boiler_status') | lower %}
           {% set flame = states('binary_sensor.ebusd_boiler_flame_active') %}
-          {% if power > 0 and 'heating' in status and 'water' not in status %}
-            {{ power }}
-          {% elif flame in ['on', 'true'] and 'heating' in status and 'water' not in status %}
+          {% set status = states('sensor.ebusd_boiler_boiler_status') | lower %}
+          {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
+          {% if flame == 'on' and status == 'heating' %}
             {{ power }}
           {% else %}
             0.0
@@ -34,12 +32,10 @@ template:
         state_class: measurement
         icon: mdi:shower
         state: >
-          {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
-          {% set status = states('sensor.ebusd_boiler_boiler_status') | lower %}
           {% set flame = states('binary_sensor.ebusd_boiler_flame_active') %}
-          {% if power > 0 and ('water' in status or status in ['comfort', '3', '4', '24']) %}
-            {{ power }}
-          {% elif flame in ['on', 'true'] and ('water' in status or status in ['comfort', '3', '4', '24']) %}
+          {% set status = states('sensor.ebusd_boiler_boiler_status') | lower %}
+          {% set power = states('sensor.ebusd_boiler_flame_power_kw') | float(0) %}
+          {% if flame == 'on' and status in ['heating hot water', 'water tank', 'comfort', '3', '4', '24'] %}
             {{ power }}
           {% else %}
             0.0
