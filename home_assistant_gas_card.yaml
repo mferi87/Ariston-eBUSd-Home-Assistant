@@ -3,7 +3,7 @@
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
-# OPTION 1: ApexCharts Card (Exact visual match with Stacked Columns)
+# OPTION 1: ApexCharts Card (Robust configuration for newly created sensors)
 # (Requires custom:apexcharts-card from HACS)
 # ------------------------------------------------------------------------------
 type: custom:apexcharts-card
@@ -12,47 +12,40 @@ header:
   title: Gas Consumption (Sm³)
   show_states: true
   colorize_states: true
-graph_span: 30d
+graph_span: 7d
 span:
   end: day
 stacked: true
 apex_config:
   chart:
     type: bar
+  noData:
+    text: "Waiting for first burner cycle today..."
   legend:
     show: true
     position: bottom
-  plotOptions:
-    bar:
-      columnWidth: 60%
 series:
   - entity: sensor.ariston_heating_gas_daily
     name: Heating
-    color: "#ff7043" # Orange (Heating)
+    color: "#ff7043"
     type: column
     group_by:
       func: max
       duration: 1d
-    show:
-      as_duration: hour
-      legend_value: false
 
   - entity: sensor.ariston_dhw_gas_daily
     name: Domestic hot water
-    color: "#1e88e5" # Blue (DHW)
+    color: "#1e88e5"
     type: column
     group_by:
       func: max
       duration: 1d
-    show:
-      as_duration: hour
-      legend_value: false
 
 ---
 
 # ------------------------------------------------------------------------------
 # OPTION 2: Standard Home Assistant Built-in Statistics Graph Card
-# (No custom cards needed)
+# (No custom cards needed - works instantly)
 # ------------------------------------------------------------------------------
 type: statistics-graph
 title: Daily Gas Consumption (Sm³)
@@ -65,14 +58,3 @@ entities:
     name: Heating (Sm³)
   - entity: sensor.ariston_dhw_gas_total
     name: Domestic Hot Water (Sm³)
-
----
-
-# ------------------------------------------------------------------------------
-# OPTION 3: Energy Dashboard Integration
-# ------------------------------------------------------------------------------
-# In Home Assistant: Settings -> Dashboards -> Energy -> Gas consumption
-# Click "Add Gas Source":
-# - Gas usage: select `sensor.ariston_heating_gas_total`
-# - Gas usage: select `sensor.ariston_dhw_gas_total`
-# Home Assistant will automatically build the official daily/monthly energy bar charts.

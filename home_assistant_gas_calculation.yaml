@@ -50,7 +50,8 @@ template:
         state_class: total_increasing
         icon: mdi:fire
         state: >
-          {{ (states('sensor.ariston_heating_energy_kwh') | float(0) / 10.55) | round(3) }}
+          {% set kwh = states('sensor.ariston_heating_energy_kwh') | float(0) %}
+          {{ (kwh / 10.55) | round(3) }}
 
       - name: "Ariston DHW Gas Total"
         unique_id: ariston_dhw_gas_total_sm3
@@ -59,7 +60,8 @@ template:
         state_class: total_increasing
         icon: mdi:water-boiler
         state: >
-          {{ (states('sensor.ariston_dhw_energy_kwh') | float(0) / 10.55) | round(3) }}
+          {% set kwh = states('sensor.ariston_dhw_energy_kwh') | float(0) %}
+          {{ (kwh / 10.55) | round(3) }}
 
 # ------------------------------------------------------------------------------
 # 2. Riemann Sum Integral: Convert Power (kW) to Energy (kWh)
