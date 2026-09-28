@@ -71,7 +71,7 @@ sensor:
     source: sensor.ariston_heating_power
     name: "Ariston Heating Energy kWh"
     unique_id: ariston_heating_energy_kwh
-    unit_prefix: k
+    unit_time: h
     round: 4
     method: left
 
@@ -79,7 +79,7 @@ sensor:
     source: sensor.ariston_dhw_power
     name: "Ariston DHW Energy kWh"
     unique_id: ariston_dhw_energy_kwh
-    unit_prefix: k
+    unit_time: h
     round: 4
     method: left
 

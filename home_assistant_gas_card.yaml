@@ -21,8 +21,7 @@ entities:
 ---
 
 # ------------------------------------------------------------------------------
-# OPTION 2: ApexCharts Card (Requires HACS frontend resource loaded in app)
-# If using mobile, ensure /hacsfiles/apexcharts-card/apexcharts-card.js is in Dashboards -> Resources
+# OPTION 2: ApexCharts Card (Real-time daily gas bar chart including today)
 # ------------------------------------------------------------------------------
 type: custom:apexcharts-card
 header:
@@ -33,6 +32,7 @@ header:
 graph_span: 7d
 span:
   end: day
+  offset: +1d
 stacked: true
 apex_config:
   chart:
@@ -45,9 +45,6 @@ series:
     name: Fűtés
     color: "#ff7043"
     type: column
-    statistics:
-      type: state
-      period: day
     group_by:
       func: max
       duration: 1d
@@ -56,9 +53,6 @@ series:
     name: Melegvíz
     color: "#1e88e5"
     type: column
-    statistics:
-      type: state
-      period: day
     group_by:
       func: max
       duration: 1d
