@@ -28,15 +28,25 @@ type: custom:apexcharts-card
 header:
   show: true
   title: Gázfogyasztás (Sm³)
+  show_states: true
+  colorize_states: true
 graph_span: 7d
+span:
+  end: day
 stacked: true
+apex_config:
+  chart:
+    type: bar
+  legend:
+    show: true
+    position: bottom
 series:
   - entity: sensor.ariston_heating_gas_daily
     name: Fűtés
     color: "#ff7043"
     type: column
     group_by:
-      func: max
+      func: raw
       duration: 1d
 
   - entity: sensor.ariston_dhw_gas_daily
@@ -44,5 +54,5 @@ series:
     color: "#1e88e5"
     type: column
     group_by:
-      func: max
+      func: raw
       duration: 1d
