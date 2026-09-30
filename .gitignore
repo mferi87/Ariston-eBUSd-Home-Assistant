@@ -3,4 +3,5 @@ captures/
 *.log.old
 *.pdf
 *.txt
+.env
 .DS_Store
